@@ -1,0 +1,93 @@
+from tkinter import *
+from tkinter import messagebox
+
+class order():
+    def __init__(self):
+        self.order = []
+
+    def add_item(self,item):
+        self.order.append(item)
+
+        if item in self.order:
+            return True
+        else:
+            return False
+    
+    def remove_item(self,item):
+        if item in self.order:
+            for it in self.order:
+                if it is item:
+                    self.order.remove(it)
+                    return True
+        else:
+            print("Item not in order!")
+            return False
+
+    def remove_all(self):
+        if not self.order:
+            print("Order is empty!")
+            return False
+        else:
+            for it in self.order:
+                self.order.remove(it)
+            return True
+
+    def show_order(self):
+        if not self.order:
+            print("Order is empty!")
+            return False
+        else:
+            for it in self.order:
+                print(it)
+            return True
+
+    def send_order(self):
+        pass
+
+if __name__ == '__main__':
+    order = order()
+
+    menu = {"Nachos":("Nachos",10.99),"Hotdog":("Hotdog",6.99),"Fries":("Fries",4.99),"Soda":("Soda",2.99),
+            "Slice_Pizza":("Slice_Pizza",6.99),"Fish_Chips":("Fish_Chips",12.99),
+            "Cheese_Burger":("Cheese_Burger",11.99),"Beer":("Beer",4.00),"Tatertots":("Tatertots",4.99)}
+
+    window = Tk()
+    window.title("Menu")
+
+    Label(window,text="Menu",font=('Arial',25)).place(height=50,width=300,x=150,y=0)
+
+    from functools import partial
+
+    def add_click(menu_item,title,desc):
+        order.add_item(menu_item)
+        messagebox.showinfo(title,desc)
+
+    def remove_click(quantity):
+        if isinstance(quantity,str):
+            order.remove_all()
+            messagebox.showinfo("Alert","Order has been cleared.")
+        else:
+            order.remove(quantity)
+            messagebox.showinfo("Alert","Item has been removed.")
+    
+    def exit_click():
+        order.send_order()
+        messagebox.showinfo("Alert","Order has been sent for processing.")
+
+    Button(window,command=partial(add_click,menu["Nachos"],"Alert","Nachos added at $10.99"),text="Nachos $10.99",font=('Arial',10),bg='red',fg='black').place(height=50,width=200,x=0,y=75)
+    Button(window,command=partial(add_click,menu["Hotdog"],"Alert","Hotdog added at $6.99"),text="Hotdog $6.99",font=('Arial',10),bg='red',fg='black').place(height=50,width=200,x=200,y=75)
+    Button(window,command=partial(add_click,menu["Fries"],"Alert","Fries added at $4.99"),text="Fries $4.99",font=('Arial',10),bg='red',fg='black').place(height=50,width=200,x=400,y=75)
+    Button(window,command=partial(add_click,menu["Slice_Pizza"],"Alert","Pizza Slice added at $3.50"),text="Pizza Slice $6.99",font=('Arial',10),bg='red',fg='black').place(height=50,width=200,x=0,y=125) 
+    Button(window,command=partial(add_click,menu["Fish_Chips"],"Alert","Fish & Chips added at $12.99"),text="Fish & Chips $12.99",font=('Arial',10),bg='red',fg='black').place(height=50,width=200,x=200,y=125)
+    Button(window,command=partial(add_click,menu["Soda"],"Alert","Soda added at $2.99"),text="Soda $2.99",font=('Arial',10),bg='red',fg='black').place(height=50,width=200,x=400,y=125)
+    Button(window,command=partial(add_click,menu["Cheese_Burger"],"Alert","Cheese Burger added at $11.99"),text="Cheese Burger $11.99",font=('Arial',10),bg='red',fg='black').place(height=50,width=200,x=0,y=175)
+    Button(window,command=partial(add_click,menu["Tatertots"],"Alert","Tatertots added at $4.99"),text="Tatertots $4.99",font=('Arial',10),bg='red',fg='black').place(height=50,width=200,x=200,y=175)
+    Button(window,command=partial(add_click,menu["Beer"],"Alert","Beer added at $4.00"),text="Beer $4.00",font=('Arial',10),bg='red',fg='black').place(height=50,width=200,x=400,y=175)
+    
+    Button(window,command=partial(remove_click,"all"),text="Clear",font=('Arial',10),bg='red',fg='black').place(height=25,width=100,x=50,y=225)
+    
+    Button(window,command=exit_click,text="Done",font=('Arial',10),bg='red',fg='black').place(height=25,width=100,x=450,y=225)
+
+    window.geometry('600x600')
+
+    window.mainloop()
