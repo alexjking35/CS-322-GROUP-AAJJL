@@ -6,6 +6,54 @@ window.geometry("350x400")
 kitchenIntro = tk.Label(text= "Welcome To The Kitchen")
 kitchenIntro.grid(row = 0, column = 4)
 
+#List box for kitchen orders
+lb = tk.Listbox(window, )
+lb.grid( row = 40, column = 4)
+
+#Adding the items to Listbox 
+def click_nachos():
+    lb.insert(0,'Nachos')
+
+def click_cheese():
+    lb.insert(0,'Cheeseburger')
+
+def click_hotdog():
+    lb.insert(0,'Hot Dog')
+
+def click_pizza():
+    lb.insert(0,'Pizza Slice')
+
+def click_fish():
+    lb.insert(0,'Fish and Chips')
+
+def click_soda():
+    lb.insert(0,'Soda')
+
+def click_beer():
+    lb.insert(0,'Beer')
+
+def click_fries():
+    lb.insert(0,'Fries')
+
+def click_tots():
+    lb.insert(0,'Tatortots')
+
+#Delete selected items from Listbox 
+def delete(listbox):
+    global things
+    #Delete 
+    selection = lb.curselection()
+    lb.delete(selection[0])
+    #Delete from list
+    value = eval(lb.get(selection[0]))
+    ind = things.index(value)
+    del(things[ind])
+    print(things)
+
+#Buttons 
+buttondel = tk.Button(window, text = "Delete item", command = lambda: delete(1))
+buttondel.grid(row = 10, column = 5)
+
 nachobutton = tk.Button(
     text= "Nachos",
     width = 5,
